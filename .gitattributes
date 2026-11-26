@@ -1,0 +1,3 @@
+# Keep the prompt files byte-identical to the ones used for the paper
+# (two of them have Windows line endings).
+prompts/*.txt -text

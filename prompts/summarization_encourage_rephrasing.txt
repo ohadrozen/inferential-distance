@@ -1,0 +1,4 @@
+
+Summarize this news article in only 1 sentences, not exceeding 22 words,
+keep only the most important details, rephrase all other details.
+News Article: [prompt_article]

@@ -1,0 +1,93 @@
+Your job is to be an annotator for NLP task. I'll define a task, and then I'll give you a few examples for the task.
+===
+ 
+Task description
+Textual entailment is the task of determining whether a sentence B is entailed (can be induced) from another sentence A. Both sentences usually contain multiple pieces of information. In this task, we would like to understand which part of A entails which part of B, and *how*. 
+For example, 
+A (premise): Italy faced power cuts due to a prolonged heat wave affecting hydro-electric stations
+B (hypothesis): Hot weather threatens Italy with power cuts
+“a prolonged heat-wave” entails “hot weather”  [Inference Type is Common Sense Reasoning]
+and “Italy faced power cuts due to”  entails “threatens Italy with power cuts”  [Inference Type is Common Sense Reasoning]
+
+
+In this task, give the new unit of information in the hypothesis (i.e., spans of tokens that appear in the hypothesis but not in the premise) and given which part of the premise entails each new unit of information (a.k.a. entailment explanation), we ask you to categorize the correct Inference Type.
+
+Inference Types to choose from:
+
+Paraphrase or Synonyms: Both terms convey essentially the same situation, event, or state, even if there are small differences in focus, tense, or the mechanics of how it happens. No outside factual knowledge or reasoning is needed to see the equivalence. Same surface meaning or using metaphor, but no reasoning is needed. Use this when both spans express the same idea directly, such that each entails the other. Test yourself: Ask: “If I only had sentence A, could I replace its span with sentence B’s span (and vice versa) without changing the meaning?”
+If yes in both directions → Paraphrase or Synonyms.
+If it only works one way or needs reasoning about implications, intent, or effects → Not Paraphrase.
+We also consider any abbreviations (e.g. United States of America >> USA) as Paraphrase or Synonyms
+Examples for Paraphrase or Synonyms:
+Example: quick response >> fast reply
+Example: happy >> glad
+Example: ahead of the deadline >> before the deadline
+Example: response >> replying
+Example: launching >> beginning
+Example: prime minister >> pm [abbreviation is considered as Paraphrase or Synonyms]
+Not a Paraphrase or Synonyms example: to buy >> to take over [aren't bi-directional entailment. take over doesn't mean buy, though buy might mean takeover]
+
+
+Common Sense Reasoning is based on universally shared, everyday human experience. If an average adult (anywhere in the world, without formal study) would immediately know the fact, it is common sense. Common sense reasoning does not require deep understanding in the domain, and no need to use Wikipedia or books to know the answer. Use this label only when the two spans are not direct synonyms, and understanding the entailment requires reasoning about effects, implications, or unstated links. That is, if you must ask “why/how does A lead to B?” instead of simply recognizing two ways of saying the same thing. Use this when the entailment only goes one way — you can understand why B follows from A (or vice versa), but they are not fully interchangeable.
+We also consider any hypernym-hyponym (e.g. dog >> animal) as Common Sense Reasoning 
+Check yourself: would a typical adult know this without having read Wikipedia or taken a class? If yes, it is Common Sense Reasoning even if it sounds factual:
+Example: he was naked >> he didn’t wear anything
+Example: the crowd cheered >> something good happened in the show
+Example: he bought cold medicine and stayed home >> he is feeling unwell
+Example: it was dark outside >> it was after sunset
+Example: he is putting the key in the ignition >> he is starting his car
+Example: it rained on the ground last night >> the ground is probably wet
+Example: she put on a jacket >> it was cold outside
+Example: boat >> vehicle (hypernym is considered as Common Sense Reasoning)
+Example: “begin distributing” >> “release” (distribution → release is an implication, not a synonym).
+Example of NOT Common Sense Reasoning: “closed up” >> “edge up” (both are stock-market shorthand for the same outcome, just phrased differently).
+
+
+World Knowledge: requires specific facts beyond common sense. Requires factual or specialized knowledge (geography, science, law, history, technical terms, etc.) that most adults don’t automatically know. Before labeling as World Knowledge, ask yourself: (1) Could someone with no special education know this from everyday life? (2) Does it require recalling a specific location, technical definition, or published fact? If (1) = yes and (2) = no → Common Sense Reasoning.
+Example: she visited Paris >> she was in France [required knowledge: Paris is in France] 
+Example: the snow melted >> temperature was above freezing [required knowledge: ice melts in temperature above freezing]
+Example: the shares fell 3 percent today >> the shares closed 3 percent lower [required knowledge: a share that falls X percent will close X precent lower. ]
+
+
+===
+*** Examples - Consider the following sentence pairs below ***
+
+Example 1
+Premise: H-2A workers are legally prohibited from remaining in the United States for more than one year.
+Hypothesis: Workers who are in the United States on an H-2A visa can't stay in the country for longer than 12 months.
+
+Annotation output (Inference Type in brackets):
+H-2A workers >> H-2A visa [Inference Type: World Knowledge, as it requires the knowledge that H-2A is a visa type]
+Prohibited from remaining >> can’t stay  [Inference Type: Common Sense Reasoning. It's not a Paraphrase or Synonyms as 'can't stay' doesn't necessarily entails 'Prohibited from remaining']
+United States>> the country [Inference Type: World Knowledge, as it requires the knowledge that United States is a country]
+For more than >> longer than [Inference Type: Paraphrase or Synonyms, as there is no reasoning here. the two terms mean the same]
+One year >> 12 months [Inference Type: Paraphrase or Synonyms, as there is no reasoning here. the two terms mean the same]
+
+
+Example 2
+Premise: Italy faced power cuts due to a prolonged heat wave affecting hydro-electric stations
+Hypothesis: Hot weather threatens Italy with power cuts.
+
+Annotation output:
+heat wave >> hot weather [Inference Type: Common Sense Reasoning. It's not a a Paraphrase or Synonyms as 'heat wave' doesn't necessarily mean 'hot weather', but in this context it entails it if we use Common Sense Reasoning]
+Italy faced power cuts due to >> threatens Italy with power cuts [Inference Type: Common Sense Reasoning. now knowledge is required here. only simple reasoning]
+
+
+Example 3
+Premise: The city is often referred to simply as Penang. 
+Hypothesis: Penang is another name for the city. 
+
+Annotation output:
+referred to as >> another name [Inference Type: Common Sense Reasoning]
+
+===
+
+Please categorize the correct Inference Type for the sentence pair below. Output must be only one of the options above without any additional text. Check yourself. 
+
+
+Premise: {{premise}}
+
+Hypothesis: {{hypothesis}}
+
+Inference to be categorized: {{_source}} >> {{_destination}}
+

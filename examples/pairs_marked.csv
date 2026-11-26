@@ -1,0 +1,5 @@
+premise,hypothesis,label,h_highlighted
+The museum will close its doors to visitors on Sunday because of the storm.,The museum shuts on the weekend due to bad weather.,1,The museum **shuts** on the **weekend** **due** to **bad** **weather**.
+Maria bought a used car in Lisbon last spring.,Maria purchased a vehicle in Portugal.,1,Maria **purchased** a **vehicle** in **Portugal**.
+The committee approved the new budget after a long debate.,The committee approved the budget.,1,The committee approved the budget.
+The kettle started whistling loudly in the kitchen.,The water in the kettle was boiling.,1,The **water** in the kettle was **boiling**.

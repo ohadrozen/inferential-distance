@@ -1,0 +1,116 @@
+Your job is to be an annotator for NLP task. I'll define a task, and then I'll give you a few examples for the task.
+===
+ 
+Task description
+Textual entailment is the task of determining whether a sentence B is entailed (can be induced) from another sentence A. Both sentences usually contain multiple pieces of information. In this task, we would like to understand which part of A entails which part of B. 
+For example, 
+A (premise): Italy faced power cuts due to a prolonged heat wave affecting hydro-electric stations
+B (hypothesis): Hot weather threatens Italy with power cuts
+“a prolonged heat-wave” entails “hot weather”, 
+and “Italy faced power cuts due to”  entails “threatens Italy with power cuts”
+
+In this task, we want to find (1) the new unit(s) of information in the hypothesis (i.e., spans of tokens that appear in the hypothesis but not in the premise) and (2) mark which part of the premise entails each new unit of information (a.k.a. entailment explanation). Each unit in the hypothesis must be atomic, i.e., can’t be broken down into smaller units while keeping entailment relations with the premise. We allow non-consecutive spans.
+
+Atomic span
+A rule of thumb to check if a span is an atomic unit: let Sp be the span in the premise and Sh the span in the hypothesis, can you further decompose the Sh (and thus the Sp if needed) into smaller units of information, i.e. Sh1 and Sh2 (and Sp1 and Sp2 if required) and get more spans where each one is still entailed by Sp (or by Sp1 or Sp2) and makes sense.
+Try to make the span of the atomic units as minimal as possible so it still explains the new information.
+
+Example
+Premise: H-2A workers are legally prohibited from remaining in the United States for more than one year.
+Hypothesis: Workers who are in the United States on an H-2A visa can't stay in the country for longer than 12 months. 
+For example:
+(Sp) united states → (Sh) the country: atomic 
+(Sp) more than one year → (Sh) longer than 12 months: not atomic
+(Sp1) more than → (Sh1) longer than
+(Sp2) one year → (Sh2) 12 months
+
+
+
+Guidelines for the task
+1. Identify New Information
+a. Check each token in the hypothesis. If it does not appear in the premise in the same or a lemmatized form, it is a candidate for a “new” token.
+b. Morphological Variants:
+•	If a token in the hypothesis (e.g., bombing) is simply a morphological or closely related form of a token in the premise (e.g., bombed-out), and no new information or nuance is introduced (both refer to the same event/root concept), do not treat it as new.
+•	Only consider it new if the change in form alters or adds meaning in a way not conveyed by the premise.
+c.  Group new tokens into atomic units—the smallest possible spans that:
+•	Introduce a distinct, standalone piece of information.
+•	Cannot be further broken down without losing or distorting the newly introduced meaning.
+2.  Assign an Entailment Relation
+•	For each atomic unit in the hypothesis, find the span in the premise that entails (or logically connects to) this new piece of information.
+•	Choose the appropriate entailment type(s):
+o	Paraphrase or Synonyms: The premise phrase and the hypothesis phrase have exactly the same meaning (e.g., “quick response” vs. “fast reply”).
+o	Two-Way Entailment: Terms that refer to each other but are not precisely identical (e.g., “12 months” vs. “a year”).
+o	Abbreviation: Short forms (e.g., "USA" vs. “United States of America”).
+o	Hypernym/Hyponym: General vs. specific category (e.g., “dog” vs. “animal”).
+o	Common Sense Reasoning: Basic, everyday human knowledge (e.g., “it rained” ⇒ “the ground is wet”).
+o	World Knowledge: Domain or specialized knowledge beyond everyday generalities (e.g., “imam” ⇒ “prayer leader”; “Penang” ⇒ “city in Malaysia”).
+3.  Examples of Atomic Unit Boundaries
+•	If two or more new tokens together form a single cohesive idea (e.g., “goes on tour” means something different than “goes on” + “tour” individually), keep them as one unit.
+•	If a new concept can be split into smaller meaningful bits that each correspond to different information in the premise or to different inference links, split them (e.g., “more than one year” ⇒ split into “more than” and “one year” if they map separately to “longer than” and “12 months”).
+4. Annotation Output Format
+For each atomic unit identified in the hypothesis, output a line of the form:
+[premise span that entails the hypothesis atomic unit] >> [atomic unit in hypothesis] - [entailment type]
+•	Highlight new words in bold (e.g., prayer leader).
+
+
+Examples
+Consider the following sentence pairs (new hypothesis tokens are underlined) below.
+
+Example 1
+Premise: H-2A workers are legally prohibited from remaining in the United States for more than one year.
+Hypothesis: Workers who are in the United States on an H-2A visa can't stay in the country for longer than 12 months.
+
+Annotation output (inference type in brackets):
+H-2A workers >> H-2A visa (Assuming the entailment explanation is ‘H-2A workers’ >> ‘H-2A visa’, the entailment of ‘visa’ by itself can’t be explained, and hence we consider ‘H-2A visa’ as the atomic unit) [world knowledge]
+Prohibited from remaining >> can’t stay  [Common Sense Reasoning]
+United States>> the country [world knowledge]
+For more than >> longer than [Paraphrase or Synonyms]
+One year >> 12 months [Two-Way Entailment]
+
+
+Example 2
+Premise: Italy faced power cuts due to a prolonged heat wave affecting hydro-electric stations
+Hypothesis: Hot weather threatens Italy with power cuts.
+
+Annotation output:
+heat wave >> hot weather [Common Sense Reasoning]
+Italy faced power cuts due to >> threatens Italy with power cuts [World knowledge + Common Sense Reasoning]
+
+
+Example 3
+Premise: The city is often referred to simply as Penang. 
+Hypothesis: Penang is another name for the city. 
+
+Annotation output:
+1. referred to as >> another name [Common Sense Reasoning]
+Thus, the only new atomic entailed unit is ‘another name’
+
+output guidlines:
+make sure your answer is a JSON containing a list of dictionaries of all atomic units. For example:
+[
+    {
+      "premise_span": "H-2A workers",
+      "hypothesis_span": "H-2A visa",
+      "entailment_type": "world knowledge"
+    },
+    {
+      "premise_span": "Prohibited from remaining",
+      "hypothesis_span": "can't stay",
+      "entailment_type": "Common Sense Reasoning"
+    },...
+]
+
+Mandatory Coverage: Every word originally marked with ** in the hypothesis must appear in exactly one hypothesis_span atomic unit. Do not omit any bold-marked word, and ensure that each bold-marked word is included only once across all annotated atomic units.
+
+In your response in the hypothesis_pan, keep the bold (**word**) for words that are originally highlighted in the hypothesis.
+ 
+===
+
+Now, please annotate the sentence pair below. 
+
+
+premise: {{premise}}
+
+Hypothesis: {{hypothesis}}
+
+

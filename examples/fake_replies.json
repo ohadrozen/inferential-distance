@@ -1,0 +1,18 @@
+{
+  "_note": "Hand-written stand-ins for model replies, used to show the file formats and by the offline tests. They are NOT outputs of o3-mini or GPT-5.",
+  "extraction": {
+    "The museum **shuts** on the **weekend** **due** to **bad** **weather**.": "```json\n[\n  {\"premise_span\": \"will close its doors\", \"hypothesis_span\": \"**shuts**\", \"entailment_type\": \"Paraphrase or Synonyms\"},\n  {\"premise_span\": \"on Sunday\", \"hypothesis_span\": \"on the **weekend**\", \"entailment_type\": \"Common Sense Reasoning\"},\n  {\"premise_span\": \"because of\", \"hypothesis_span\": \"**due** to\", \"entailment_type\": \"Paraphrase or Synonyms\"},\n  {\"premise_span\": \"the storm\", \"hypothesis_span\": \"**bad** **weather**\", \"entailment_type\": \"Common Sense Reasoning\"}\n]\n```",
+    "Maria **purchased** a **vehicle** in **Portugal**.": "[{\"premise_span\": \"Maria\", \"hypothesis_span\": \"Maria\", \"entailment_type\": \"Paraphrase or Synonyms\"}, {\"premise_span\": \"bought\", \"hypothesis_span\": \"**purchased**\", \"entailment_type\": \"Paraphrase or Synonyms\"}, {\"premise_span\": \"a used car\", \"hypothesis_span\": \"a **vehicle**\", \"entailment_type\": \"Hypernym/Hyponym\"}, {\"premise_span\": \"in Lisbon\", \"hypothesis_span\": \"in **Portugal**\", \"entailment_type\": \"world knowledge\"}]",
+    "The **water** in the kettle was **boiling**.": "[{\"premise_span\": \"The kettle started whistling\", \"hypothesis_span\": \"The **water** in the kettle was **boiling**\", \"entailment_type\": \"Common Sense Reasoning\"}]"
+  },
+  "types": {
+    "shuts": "Paraphrase or Synonyms",
+    "on the weekend": "Common Sense Reasoning",
+    "due to": "Paraphrase or Synonyms",
+    "bad weather": "Common Sense Reasoning",
+    "purchased": "Paraphrase or Synonyms",
+    "a vehicle": "Common Sense Reasoning",
+    "in Portugal": "World Knowledge",
+    "The water in the kettle was boiling": "Common Sense Reasoning"
+  }
+}

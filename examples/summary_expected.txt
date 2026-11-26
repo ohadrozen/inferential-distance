@@ -1,0 +1,5 @@
+pairs: 4
+pairs with numeric D: 4 (NA: 0)
+mean D: 2.000
+D distribution: D=0: 1, D=1: 1, D=3: 1, D=4: 1
+inference types (GPT-5 labels, all atoms): Paraphrase or Synonyms: 3, Common Sense Reasoning: 4, World Knowledge: 1, (unmapped): 0

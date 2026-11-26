@@ -1,0 +1,14 @@
+# Core
+spacy>=3.7,<4
+nltk>=3.8
+openai>=1.0
+# English spaCy model used for lemmatisation (install separately):
+#   python -m spacy download en_core_web_trf
+
+# Only for `prepare-aggrefact` (downloads LLM-AggreFact from the Hugging Face Hub)
+# datasets>=2.14
+# pandas>=2.0
+# numpy>=1.24
+
+# Tests
+pytest>=7

@@ -1,0 +1,19 @@
+
+Act as a professional fact-checker. Analyze the following claim using the provided context and return only a single integer result: 1 for true and 0 for false.
+
+Claim: "[prompt_claim]"
+
+Context:
+"[prompt_context]"
+
+Instructions:
+
+1 .Break down the claim into verifiable sub-components.
+2. Cross-reference each component with the context.
+3. Identify any logical fallacies, missing context, or outdated information.
+4. Evaluate the overall accuracy of the claim based on the analysis.
+5. Return only a single number:
+    1 if the claim is accurate and supported by the context.
+    0 if the claim is inaccurate or misleading.
+    
+! important !! The output MUST be either '0' or '1' with no further text. 
